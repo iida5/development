@@ -22,6 +22,10 @@ vscodeのDevContainers拡張機能を利用したコンテナ内開発ができ�
 ## リモートのLinuxサーバーで動かす場合  
 ・サーバーを準備してdockerを入れる  
 ・vscodeでサーバーにSSH接続  
+  yum install git docker  
+  sudo groupadd docker  
+  sudo usermod -aG docker $USER  
+  newgrp docker  
 ・git clone https://github.com/iida5/development.git  
 ・cd development  
 ・右下の Reopen in Container をクリック  
