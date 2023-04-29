@@ -49,6 +49,7 @@ services:
       dockerfile: ./docker/php/Dockerfile
     volumes:
       - ./www/.vscode:/var/www/.vscode
+      - ./www/logs:/var/www/logs
       - ./www/web:/var/www/web
       - ./www/api:/var/www/api
       - ./www/admin:/var/www/admin
