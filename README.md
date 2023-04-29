@@ -23,6 +23,7 @@ vscodeのDevContainers拡張機能を利用したコンテナ内開発ができ�
 ・サーバーを準備してdockerを入れる  
 ・vscodeでサーバーにSSH接続  
   yum install git docker  
+  sudo pip3 install docker-compose  
   sudo groupadd docker  
   sudo usermod -aG docker $USER  
   newgrp docker  
