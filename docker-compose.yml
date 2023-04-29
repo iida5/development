@@ -1,0 +1,95 @@
+version: '3'
+
+services:
+
+  # ドメインでのアクセス、https化したいときに利用
+  # proxy:
+  #   container_name: proxy
+  #   image: nginx
+  #   volumes:
+  #     - ./docker/nginx/proxy:/etc/nginx/conf.d
+  #   ports:
+  #     - 80:80
+  #     - 443:443
+
+  tool:
+    container_name: tool
+    image: nginx
+    volumes:
+      - ./docker/nginx/tool:/etc/nginx/conf.d
+      - ./www/tool:/var/www/tool
+      - ./www/logs:/var/www/logs
+    ports:
+      - 8080:8080
+
+  web:
+    container_name: web
+    image: nginx
+    volumes:
+      - ./docker/nginx/web:/etc/nginx/conf.d
+      - ./www/web:/var/www/web
+      - ./www/logs:/var/www/logs
+    ports:
+      - 8081:8081
+
+  api:
+    container_name: api
+    image: nginx
+    volumes:
+      - ./docker/nginx/api:/etc/nginx/conf.d
+      - ./www/api:/var/www/api
+      - ./www/logs:/var/www/logs
+    ports:
+      - 8082:8082
+
+  admin:
+    container_name: admin
+    image: nginx
+    volumes:
+      - ./docker/nginx/admin:/etc/nginx/conf.d
+      - ./www/admin:/var/www/admin
+      - ./www/logs:/var/www/logs
+    ports:
+      - 8083:8083
+
+  php:
+    container_name: php
+    build:
+      context: .
+      dockerfile: ./docker/php/Dockerfile
+    volumes:
+      - ./www/web:/var/www/web
+      - ./www/api:/var/www/api
+      - ./www/admin:/var/www/admin
+      - ./www/tool:/var/www/tool
+      - ./docker/php/php.ini:/usr/local/etc/php/php.ini
+
+  mariadb:
+    container_name: mariadb
+    image: mariadb
+    volumes:
+      - ./db/mariadb:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: cms
+      MYSQL_USER: root
+      MYSQL_PASSWORD: password
+    ports:
+      - 3306:3306
+
+  mssql:
+    container_name: mssql
+    image: mcr.microsoft.com/mssql/server:2019-latest
+    user: root
+    ports:
+      - "1433:1433"
+    environment:
+      - ACCEPT_EULA=Y
+      - MSSQL_SA_PASSWORD=Password#1
+      - MSSQL_PID=Express
+      - MSSQL_LCID=1041
+      - MSSQL_COLLATION=Japanese_CI_AS
+    volumes:
+      - "./db/mssql/data:/var/opt/mssql/data"
+      - "./db/mssql/log:/var/opt/mssql/log"
+      - "./db/mssql/secrets:/var/opt/mssql/secrets"
