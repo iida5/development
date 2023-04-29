@@ -54,7 +54,9 @@ services:
       - ./www/admin:/var/www/admin
       - ./www/tool:/var/www/tool
       - ./docker/php/php.ini:/usr/local/etc/php/php.ini
-
+    depends_on:
+      - mariadb
+      
   mariadb:
     container_name: mariadb
     image: mariadb
