@@ -2,26 +2,6 @@ version: '3'
 
 services:
 
-  # ドメインでのアクセス、https化したいときに利用
-  # proxy:
-  #   container_name: proxy
-  #   image: nginx
-  #   volumes:
-  #     - ./docker/nginx/proxy:/etc/nginx/conf.d
-  #   ports:
-  #     - 80:80
-  #     - 443:443
-
-  tool:
-    container_name: tool
-    image: nginx
-    volumes:
-      - ./docker/nginx/tool:/etc/nginx/conf.d
-      - ./www/tool:/var/www/tool
-      - ./www/logs:/var/www/logs
-    ports:
-      - 8080:8080
-
   web:
     container_name: web
     image: nginx
@@ -52,6 +32,16 @@ services:
     ports:
       - 8083:8083
 
+  tool:
+    container_name: tool
+    image: nginx
+    volumes:
+      - ./docker/nginx/tool:/etc/nginx/conf.d
+      - ./www/tool:/var/www/tool
+      - ./www/logs:/var/www/logs
+    ports:
+      - 8080:8080
+      
   php:
     container_name: php
     build:
@@ -78,19 +68,29 @@ services:
     ports:
       - 3306:3306
 
-  mssql:
-    container_name: mssql
-    image: mcr.microsoft.com/mssql/server:2019-latest
-    user: root
-    ports:
-      - "1433:1433"
-    environment:
-      - ACCEPT_EULA=Y
-      - MSSQL_SA_PASSWORD=Password#1
-      - MSSQL_PID=Express
-      - MSSQL_LCID=1041
-      - MSSQL_COLLATION=Japanese_CI_AS
-    volumes:
-      - "./db/mssql/data:/var/opt/mssql/data"
-      - "./db/mssql/log:/var/opt/mssql/log"
-      - "./db/mssql/secrets:/var/opt/mssql/secrets"
+#   mssql:
+#     container_name: mssql
+#     image: mcr.microsoft.com/mssql/server:2019-latest
+#     user: root
+#     ports:
+#       - "1433:1433"
+#     environment:
+#       - ACCEPT_EULA=Y
+#       - MSSQL_SA_PASSWORD=Password#1
+#       - MSSQL_PID=Express
+#       - MSSQL_LCID=1041
+#       - MSSQL_COLLATION=Japanese_CI_AS
+#     volumes:
+#       - "./db/mssql/data:/var/opt/mssql/data"
+#       - "./db/mssql/log:/var/opt/mssql/log"
+#       - "./db/mssql/secrets:/var/opt/mssql/secrets"
+
+#     ドメインでのアクセス、https化したいときに利用
+#     proxy:
+#       container_name: proxy
+#       image: nginx
+#       volumes:
+#         - ./docker/nginx/proxy:/etc/nginx/conf.d
+#       ports:
+#         - 80:80
+#         - 443:443
