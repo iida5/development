@@ -46,7 +46,7 @@ services:
     container_name: php
     build:
       context: .
-      dockerfile: ./docker/php/Dockerfile
+      dockerfile: ./docker/php/Dockerfile-php81
     volumes:
       - ./www/.vscode/:/var/www/.vscode
       - ./www/web:/var/www/web
