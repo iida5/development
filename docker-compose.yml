@@ -48,16 +48,14 @@ services:
       context: .
       dockerfile: ./docker/php/Dockerfile
     volumes:
-      - ./www/.vscode:/var/www/.vscode
-      - ./www/logs:/var/www/logs
+      - ./www/.vscode/:/var/www/.vscode
       - ./www/web:/var/www/web
       - ./www/api:/var/www/api
       - ./www/admin:/var/www/admin
       - ./www/tool:/var/www/tool
+      - ./www/logs:/var/www/logs
       - ./docker/php/php.ini:/usr/local/etc/php/php.ini
-    depends_on:
-      - mariadb
-      
+
   mariadb:
     container_name: mariadb
     image: mariadb
@@ -71,29 +69,29 @@ services:
     ports:
       - 3306:3306
 
-#   mssql:
-#     container_name: mssql
-#     image: mcr.microsoft.com/mssql/server:2019-latest
-#     user: root
-#     ports:
-#       - "1433:1433"
-#     environment:
-#       - ACCEPT_EULA=Y
-#       - MSSQL_SA_PASSWORD=Password#1
-#       - MSSQL_PID=Express
-#       - MSSQL_LCID=1041
-#       - MSSQL_COLLATION=Japanese_CI_AS
-#     volumes:
-#       - "./db/mssql/data:/var/opt/mssql/data"
-#       - "./db/mssql/log:/var/opt/mssql/log"
-#       - "./db/mssql/secrets:/var/opt/mssql/secrets"
+  # mssql:
+  #   container_name: mssql
+  #   image: mcr.microsoft.com/mssql/server:2019-latest
+  #   user: root
+  #   ports:
+  #     - "1433:1433"
+  #   environment:
+  #     - ACCEPT_EULA=Y
+  #     - MSSQL_SA_PASSWORD=Password#1
+  #     - MSSQL_PID=Express
+  #     - MSSQL_LCID=1041
+  #     - MSSQL_COLLATION=Japanese_CI_AS
+  #   volumes:
+  #     - "./db/mssql/data:/var/opt/mssql/data"
+  #     - "./db/mssql/log:/var/opt/mssql/log"
+  #     - "./db/mssql/secrets:/var/opt/mssql/secrets"
 
-#     ドメインでのアクセス、https化したいときに利用
-#     proxy:
-#       container_name: proxy
-#       image: nginx
-#       volumes:
-#         - ./docker/nginx/proxy:/etc/nginx/conf.d
-#       ports:
-#         - 80:80
-#         - 443:443
+  # ドメインでのアクセス、https化したいときに利用
+  # proxy:
+  #   container_name: proxy
+  #   image: nginx
+  #   volumes:
+  #     - ./docker/nginx/proxy:/etc/nginx/conf.d
+  #   ports:
+  #     - 80:80
+  #     - 443:443
